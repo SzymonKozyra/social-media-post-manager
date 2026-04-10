@@ -26,11 +26,16 @@ Wyniki skanowania:
 ![Docker Scout Scan](images/skan_wyniki.png)
 
 ## Uruchomienie projektu
+Krok 0: Pobierz repozytorium:
+```bash
+git clone https://github.com/SzymonKozyra/social-media-post-manager.git
+cd social-media-post-manager
+```
 ### Opcja A: Docker Compose
 1. Zbuduj i uruchom aplikację: 
 ```bash
 mvn clean package -DskipTests
-docker compose up --build -d`
+docker compose up --build -d
 ```
 2. Aplikacja będzie dostępna pod adresem: 
 - http://localhost:80
@@ -40,16 +45,11 @@ docker compose up --build -d`
 ```bash
 minikube start --cni=calico
 ```
-2. Załaduj lokalne obrazy do rejestru klastra:
-```bash
-minikube image load productcataloglab-app-service:latest
-minikube image load productcataloglab-frontend-service:latest
-```
-3. Zaaplikuj manifest: 
+2. Zaaplikuj manifest: 
 ```bash
 kubectl apply -f manifest.yaml
 ```
-4. Sprawdź status wdrożenia:
+3. Sprawdź status wdrożenia:
 ```bash
 kubectl get all
 ```
@@ -59,7 +59,7 @@ kubectl config set-context --current --namespace=default
 ```
 **Oczekiwany rezultat:** Wszystkie pody powinny mieć status Running, a serwisy poprawnie przypisane adresy IP i porty.
 ![Oczekiwany rezultat](images/poprawne_uruchomienie.png)
-5. Uzyskaj dostęp do aplikacji:
+4. Uzyskaj dostęp do aplikacji:
 ```bash
 minikube service frontend-service
 ```

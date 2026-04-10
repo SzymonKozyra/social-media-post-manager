@@ -98,8 +98,8 @@ spec:
     spec:
       containers:
         - name: spring-app
-          image: productcataloglab-app-service:latest
-          imagePullPolicy: IfNotPresent
+          image: szymonkozyra/post-app:latest # LINK DO DOCKER HUB
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
@@ -150,8 +150,8 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: productcataloglab-frontend-service:latest
-          imagePullPolicy: IfNotPresent
+          image: szymonkozyra/post-frontend:latest # LINK DO DOCKER HUB
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           resources:
