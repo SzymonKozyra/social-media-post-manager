@@ -9,7 +9,7 @@ System składa się z trzech odseparowanych warstw:
 
 ![Schemat Architektury](images/architektura.png)
 
-## 🛡Bezpieczeństwo i Konfiguracja
+## Bezpieczeństwo i Konfiguracja
 ### Kluczowe cechy wdrożenia:
 * **Izolacja Bazy Danych**: PostgreSQL jest dostępny wyłącznie dla usługi backendowej wewnątrz sieci klastra.
 * **Kubernetes Secrets**: Wrażliwe dane, takie jak hasła do bazy, są przechowywane w zaszyfrowanych obiektach Secret.
@@ -18,7 +18,7 @@ System składa się z trzech odseparowanych warstw:
 
 ## Analiza Zagrożeń (Docker Scout)
 Przeprowadzono audyt obrazu `app-service` pod kątem podatności.
-**Wyniki skanowania:**
+Wyniki skanowania:
 * **Wykryte podatności**: 32 (1 Critical, 7 High, 12 Medium, 7 Low).
 * **Kluczowe ryzyko**: CVE-2026-32767 (Critical) w bibliotece `expat` oraz błędy w serwerze Tomcat.
 * **Rekomendacja**: Aktualizacja obrazu bazowego do wersji `26-jre-alpine` w celu usunięcia luki krytycznej.
@@ -32,7 +32,7 @@ Przeprowadzono audyt obrazu `app-service` pod kątem podatności.
 mvn clean package -DskipTests
 docker compose up --build -d`
 ```
-3. Aplikacja dostępna pod adresem: 
+2. Aplikacja będzie dostępna pod adresem: 
 - http://localhost:80
 
 ### Opcja B: Kubernetes 
@@ -49,7 +49,17 @@ minikube image load productcataloglab-frontend-service:latest
 ```bash
 kubectl apply -f manifest.yaml
 ```
-4. Uzyskaj dostęp do aplikacji:
+4. Sprawdź status wdrożenia:
+```bash
+kubectl get all
+```
+**Wskazówka:** Jeśli lista zasobów jest pusta, mimo poprawnego wykonania `apply`, Twój kubectl może operować w innej przestrzeni nazw. Ustaw domyślny kontekst komendą:
+```bash
+kubectl config set-context --current --namespace=default
+```
+**Oczekiwany rezultat:** Wszystkie pody powinny mieć status Running, a serwisy poprawnie przypisane adresy IP i porty.
+![Oczekiwany rezultat](images/poprawne_uruchomienie.png)
+5. Uzyskaj dostęp do aplikacji:
 ```bash
 minikube service frontend-service
 ```
