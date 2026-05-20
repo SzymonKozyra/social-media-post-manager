@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:latest
+          image: szymonkozyra/post-db:latest
           env:
             - name: POSTGRES_DB
               value: "productcataloglab"

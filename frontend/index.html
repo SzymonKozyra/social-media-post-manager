@@ -7,11 +7,27 @@
 <h1>Social Media Post Manager</h1>
 <div id="posts">Witaj! Aplikacja zostala poprawnie uruchomiona.</div>
 <script>
-    fetch('http://localhost:8080/api/v1/posts')
-        .then(response => response.json())
+    const API_URL = 'http://127.0.0.1:51097';
+    fetch(`${API_URL}/api/v1/posts`)
+        .then(response => {
+            if (!response.ok) throw new Error('Problem z połączeniem: ' + response.status);
+            return response.json();
+        })
         .then(data => {
             const div = document.getElementById('posts');
-            div.innerHTML = data.map(p => `<div><h3>${p.title}</h3><p>${p.content}</p></div>`).join('');
+            if (data.length === 0) {
+                div.innerHTML = "Brak postów w bazie danych.";
+            } else {
+                div.innerHTML = data.map(p => `
+                    <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+                        <h3>${p.title}</h3>
+                        <p>${p.content}</p>
+                    </div>`).join('');
+            }
+        })
+        .catch(error => {
+            document.getElementById('posts').innerHTML = "<b style='color:red'>Błąd połączenia z API:</b> " + error.message;
+            console.error(error);
         });
 </script>
 </body>
